@@ -27,8 +27,17 @@ https://github.com/carolcheng124/SlowLifeGUI/blob/master/screenshots/snapshot2_f
 
 ###MANUAL TEST ON runContinous()
 
-PRECONDITION:run this application, set panel size as 15, all cells shows grey in panel.
-EXECUTION STEPS:1. click on all cells in row 7 to trigger them alive
-                2. click on all cells in colum 7 to trigger them alive
-                3. click on "runContinous" button
-POSTCONDITIONS: All cells start keeping changing color, as part of the cells alive and part of the cells dies, but the status keep changing, until at one point, their colors keep stable there forever.
+PRECONDITION:
+
+run this application, set panel size as 15, all cells shows grey in panel.
+EXECUTION STEPS:
+
+1. click on all cells in row 7 to trigger them alive, showing "X" with red backgroundcolor
+
+2. click on all cells in colum 7 to trigger them alive, showing "X" with red backgroundcolor
+
+3. click on "runContinous" button
+
+POSTCONDITIONS: 
+
+All cells start keeping changing color, as part of the cells alive and show red and part of the cells dies and show green, but the status keep changing, until at some point, their colors keep stable there forever.
