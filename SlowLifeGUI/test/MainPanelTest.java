@@ -125,6 +125,12 @@ public class MainPanelTest {
     @Test
     public void TestBackup0(){
         //1.no cell is alive 
+        for(int i=0; i<SIZE; i++) {
+            for(int j=0; j<SIZE; j++) {
+                _cells[i][j] = new Cell();
+                _cells[i][j].setAlive(false);
+            }
+	}
         
         //2.run and backup
         panel.run();
@@ -133,8 +139,8 @@ public class MainPanelTest {
         panel.undo();
         
         //4.verify the current status pattern is the same as the one in last iteration
-        for(int i=0; i<15; i++) {
-            for(int j=0; j<15; j++) {
+        for(int i=0; i<SIZE; i++) {
+            for(int j=0; j<SIZE; j++) {
                     assertFalse(_cells[i][j].getAlive());
             }
 	}
@@ -150,8 +156,8 @@ public class MainPanelTest {
     @Test
     public void TestBackup1(){
         //1.set original status pattern for cell[][]
-        for(int i=0; i<15; i++) {
-            for(int j=0; j<15; j++) {
+        for(int i=0; i<SIZE; i++) {
+            for(int j=0; j<SIZE; j++) {
                 _cells[i][j] = new Cell();
                 if(i <= SIZE/2 && j == SIZE/2 ||i == SIZE/2&& j <= SIZE/2 ){
                     _cells[i][j].setAlive(true);
@@ -166,8 +172,8 @@ public class MainPanelTest {
         panel.undo();
         
         //4.verify the current status pattern is the same as the one in last iteration
-        for(int i=0; i<15; i++) {
-            for(int j=0; j<15; j++) {
+        for(int i=0; i<SIZE; i++) {
+            for(int j=0; j<SIZE; j++) {
                 if(i <= SIZE/2 && j == SIZE/2 || i == SIZE/2 && j <= SIZE/2 ){
                     assertTrue(_cells[i][j].getAlive());
                 }else assertFalse(_cells[i][j].getAlive());
@@ -185,8 +191,8 @@ public class MainPanelTest {
     @Test
     public void TestBackup2(){
         //1.set all cells alive
-        for(int i=0; i<15; i++) {
-            for(int j=0; j<15; j++) {
+        for(int i=0; i<SIZE; i++) {
+            for(int j=0; j<SIZE; j++) {
                 _cells[i][j] = new Cell();
                 _cells[i][j].setAlive(true);
             }
@@ -199,8 +205,8 @@ public class MainPanelTest {
         panel.undo();
         
         //4.verify the current status pattern is the same as the one in last iteration
-        for(int i=0; i<15; i++) {
-            for(int j=0; j<15; j++) {
+        for(int i=0; i<SIZE; i++) {
+            for(int j=0; j<SIZE; j++) {
                     assertTrue(_cells[i][j].getAlive());
             }
 	}
@@ -215,15 +221,63 @@ public class MainPanelTest {
      * Test the debugPrint print the backup cells and current cells normally
      */
     @Test
-    public void TestDebugPrint(){
+    public void TestDebugPrint0(){
+        //use script to make record
+        StringBuilder script = new StringBuilder();
+        
+        //1.no cell alive
+        //script records backup cell
+        script.append("Backup cells\n");
+        for(int i=0; i<SIZE; i++) {
+            for(int j=0; j<SIZE; j++) {
+                _cells[i][j] = new Cell();
+                _cells[i][j].setAlive(false);
+                script.append(".");
+            }
+            script.append("\n");
+	}
+        
+        //2.run and backup
+        panel.run();
+        
+        //script records current cells
+        script.append("Current cells:\n");
+        for(int i=0; i<SIZE; i++) {
+            for(int j=0; j<SIZE; j++) {
+                if(_cells[i][j].getAlive())
+                    script.append("X");
+                else script.append(".");
+            }
+            script.append("\n");
+	}
+        
+        //to record the console print
+        final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        
+        //3.debugPrint
+        panel.debugPrint();
+        
+        //4.verify
+        assertEquals(script.toString(), outContent.toString());
+
+    }
+    
+        /**
+     * Test of debugPrint method, of class MainPanel.
+     * Test the modification to debugPrint() won't change its function
+     * Test the debugPrint print the backup cells and current cells normally
+     */
+    @Test
+    public void TestDebugPrint1(){
         //use script to make record
         StringBuilder script = new StringBuilder();
         
         //1.set original status pattern for cell[][]
         //script records backup cell
         script.append("Backup cells\n");
-        for(int i=0; i<15; i++) {
-            for(int j=0; j<15; j++) {
+        for(int i=0; i<SIZE; i++) {
+            for(int j=0; j<SIZE; j++) {
                 _cells[i][j] = new Cell();
                 if(i <= SIZE/2 && j == SIZE/2 ||i == SIZE/2&& j <= SIZE/2 ){
                     _cells[i][j].setAlive(true);
@@ -241,8 +295,56 @@ public class MainPanelTest {
         
         //script records current cells
         script.append("Current cells:\n");
-        for(int i=0; i<15; i++) {
-            for(int j=0; j<15; j++) {
+        for(int i=0; i<SIZE; i++) {
+            for(int j=0; j<SIZE; j++) {
+                if(_cells[i][j].getAlive())
+                    script.append("X");
+                else script.append(".");
+            }
+            script.append("\n");
+	}
+        
+        //to record the console print
+        final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        
+        //3.debugPrint
+        panel.debugPrint();
+        
+        //4.verify
+        assertEquals(script.toString(), outContent.toString());
+
+    }
+    
+        /**
+     * Test of debugPrint method, of class MainPanel.
+     * Test the modification to debugPrint() won't change its function
+     * Test the debugPrint print the backup cells and current cells normally
+     */
+    @Test
+    public void TestDebugPrint2(){
+        //use script to make record
+        StringBuilder script = new StringBuilder();
+        
+        //1.all cell alive
+        //script records backup cell
+        script.append("Backup cells\n");
+        for(int i=0; i<SIZE; i++) {
+            for(int j=0; j<SIZE; j++) {
+                _cells[i][j] = new Cell();
+                _cells[i][j].setAlive(true);
+                script.append("X");
+            }
+            script.append("\n");
+	}
+        
+        //2.run and backup
+        panel.run();
+        
+        //script records current cells
+        script.append("Current cells:\n");
+        for(int i=0; i<SIZE; i++) {
+            for(int j=0; j<SIZE; j++) {
                 if(_cells[i][j].getAlive())
                     script.append("X");
                 else script.append(".");
@@ -275,12 +377,54 @@ public class MainPanelTest {
      * Test panel should have the same status with backup after undo
      */
     @Test
-    public void testUndo() {
+    public void testUndo0() {
+        System.out.println("undo");
+        
+        //1.no cell alive
+        for(int i=0; i<SIZE; i++) {
+            for(int j=0; j<SIZE; j++) {
+                _cells[i][j] = new Cell();
+                _cells[i][j].setAlive(false);
+            }
+	}
+        
+        //2.run one iteration and backup 
+        panel.run();
+        
+        //3.fake backupCells, same as the original status pattern set for cell[][]
+        _backupCells = new boolean[SIZE][SIZE];
+        for(int i=0; i<SIZE; i++) {
+            for(int j=0; j<SIZE; j++) {
+                    _backupCells[i][j] = false;
+            }
+	}
+        
+        //4. undo to backupcells
+        panel.undo();
+        
+        //5.verify whether current status is the same with backup's
+        for(int i=0; i<SIZE; i++) {
+            for(int j=0; j<SIZE; j++) {
+                    assertEquals(_cells[i][j].getAlive(), _backupCells[i][j]);
+            }
+	}
+        
+          
+    }
+    
+    /**
+     * Test of undo method, of class MainPanel.
+     * boolean backupCell[][]
+     * Confirm the removal of redundant convertToBoolean() won't change the function of undo()
+     * Test panel should have the same status with backup after undo
+     */
+    @Test
+    public void testUndo1() {
         System.out.println("undo");
         
         //1.set original status pattern for cell[][]
-        for(int i=0; i<15; i++) {
-            for(int j=0; j<15; j++) {
+        for(int i=0; i<SIZE; i++) {
+            for(int j=0; j<SIZE; j++) {
                 _cells[i][j] = new Cell();
                 if(i <= SIZE/2 && j == SIZE/2 ||i == SIZE/2&& j <= SIZE/2 ){
                     _cells[i][j].setAlive(true);
@@ -313,6 +457,48 @@ public class MainPanelTest {
         
           
     }
+    
+        /**
+     * Test of undo method, of class MainPanel.
+     * boolean backupCell[][]
+     * Confirm the removal of redundant convertToBoolean() won't change the function of undo()
+     * Test panel should have the same status with backup after undo
+     */
+    @Test
+    public void testUndo2() {
+        System.out.println("undo");
+        
+        //1.all cells alive
+        for(int i=0; i<SIZE; i++) {
+            for(int j=0; j<SIZE; j++) {
+                _cells[i][j] = new Cell();
+                _cells[i][j].setAlive(true);
+            }
+	}
+        
+        //2.run one iteration and backup 
+        panel.run();
+        
+        //3.fake backupCells, same as the original status pattern set for cell[][]
+        _backupCells = new boolean[SIZE][SIZE];
+        for(int i=0; i<SIZE; i++) {
+            for(int j=0; j<SIZE; j++) {
+                _backupCells[i][j] = true;
+            }
+	}
+        
+        //4. undo to backupcells
+        panel.undo();
+        
+        //5.verify whether current status is the same with backup's
+        for(int i=0; i<SIZE; i++) {
+            for(int j=0; j<SIZE; j++) {
+                    assertEquals(_cells[i][j].getAlive(), _backupCells[i][j]);
+            }
+	}
+        
+          
+    }
 
     /**
      * Test of load method, of class MainPanel.
@@ -321,12 +507,53 @@ public class MainPanelTest {
      * Test all cells' current status should be the same as backup file after load it back
      */
     @Test
-    public void testLoad() {
+    public void testLoad0() {
+        System.out.println("Test load");
+        
+        //1.no cell alive
+        for(int i=0; i<SIZE; i++) {
+            for(int j=0; j<SIZE; j++) {
+                _cells[i][j] = new Cell();
+                _cells[i][j].setAlive(false);
+            }
+	}
+        
+        //2.write to string as backup file
+        String file = panel.toString();
+        String[] stringArr = file.split("\\n");
+        ArrayList<String> lines = new ArrayList<>();
+        for(String s: stringArr){
+            lines.add(s);
+        }
+        
+        //3.run one iteration to disturb the original pattern
+        panel.run();
+        
+        //4.load back from backup file
+        panel.load(lines);
+        
+        //5.verify
+        for(int i=0; i<SIZE; i++) {
+            for(int j=0; j<SIZE; j++) {
+                assertFalse(_cells[i][j].getAlive());
+            }
+	}
+        
+    }
+    
+    /**
+     * Test of load method, of class MainPanel.
+     * manually set some cells in _cells[][] alive
+     * Confirm the modification to load() won't change its function
+     * Test all cells' current status should be the same as backup file after load it back
+     */
+    @Test
+    public void testLoad1() {
         System.out.println("Test load");
         
         //1.set status for each cell
-        for(int i=0; i<15; i++) {
-            for(int j=0; j<15; j++) {
+        for(int i=0; i<SIZE; i++) {
+            for(int j=0; j<SIZE; j++) {
                 _cells[i][j] = new Cell();
                 if(i == j){
                     _cells[i][j].setAlive(true);
@@ -349,11 +576,52 @@ public class MainPanelTest {
         panel.load(lines);
         
         //5.verify
-        for(int i=0; i<15; i++) {
-            for(int j=0; j<15; j++) {
+        for(int i=0; i<SIZE; i++) {
+            for(int j=0; j<SIZE; j++) {
                 if(i == j){
                     assertTrue(_cells[i][j].getAlive());
                 }else assertFalse(_cells[i][j].getAlive());
+            }
+	}
+        
+    }
+    
+    /**
+     * Test of load method, of class MainPanel.
+     * manually set some cells in _cells[][] alive
+     * Confirm the modification to load() won't change its function
+     * Test all cells' current status should be the same as backup file after load it back
+     */
+    @Test
+    public void testLoad2() {
+        System.out.println("Test load");
+        
+        //1.all cells alive
+        for(int i=0; i<SIZE; i++) {
+            for(int j=0; j<SIZE; j++) {
+                _cells[i][j] = new Cell();
+                _cells[i][j].setAlive(true);    
+            }
+	}
+        
+        //2.write to string as backup file
+        String file = panel.toString();
+        String[] stringArr = file.split("\\n");
+        ArrayList<String> lines = new ArrayList<>();
+        for(String s: stringArr){
+            lines.add(s);
+        }
+        
+        //3.run one iteration to disturb the original pattern
+        panel.run();
+        
+        //4.load back from backup file
+        panel.load(lines);
+        
+        //5.verify
+        for(int i=0; i<SIZE; i++) {
+            for(int j=0; j<SIZE; j++) {
+                    assertTrue(_cells[i][j].getAlive());
             }
 	}
         

@@ -52,16 +52,32 @@ public class CellTest {
             assertTrue(listenerString.contains("CellButtonListener"));
 	}
         
+                
         /**
          * Test toString() should return the correct string
          */
 	@Test
-	public void testToString() {
+	public void testToString0() {
+            assertEquals(cell.toString(), ".");
+	}
+        
+        /**
+         * Test toString() should return the correct string
+         */
+	@Test
+	public void testToString1() {
             cell.setAlive(true);
             assertEquals(cell.toString(), "X");
-            
+	}
+        
+        /**
+         * Test toString() should return the correct string
+         */
+	@Test
+	public void testToString2() {
             cell.setAlive(false);
             assertEquals(cell.toString(), ".");
 	}
+
     
 }
