@@ -19,6 +19,7 @@ Even though backup() consumed much less than CalculateNextIteration(), but cell<
 
 Below the link to the screenshot of the CPU status when running the original application:
 https://github.com/carolcheng124/SlowLifeGUI/blob/master/screenshots/snapshot1_initial.png
+https://github.com/carolcheng124/SlowLifeGUI/blob/master/screenshots/snapshot11.1_initial.png
 
 
 Below the link to the screenshot of the CPU status when running the application after modification:
