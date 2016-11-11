@@ -117,6 +117,30 @@ public class MainPanelTest {
         assertEquals(res, target); //assume the target cell should 
     }
     
+    /**
+     * Test of backup method, of class MainPanel.
+     * Test the modification to backup() won't change its function
+     * Test no cell that alive, after running for one iteration, the backup will return panel to the status in last iteration
+     */
+    @Test
+    public void TestBackup0(){
+        //1.no cell is alive 
+        
+        //2.run and backup
+        panel.run();
+        
+        //3.convert to backup
+        panel.undo();
+        
+        //4.verify the current status pattern is the same as the one in last iteration
+        for(int i=0; i<15; i++) {
+            for(int j=0; j<15; j++) {
+                    assertFalse(_cells[i][j].getAlive());
+            }
+	}
+    
+    }
+    
     
    /**
      * Test of backup method, of class MainPanel.
@@ -124,7 +148,7 @@ public class MainPanelTest {
      * Test after running for one iteration, the backup will return panel to the status in last iteration
      */
     @Test
-    public void TestBackup(){
+    public void TestBackup1(){
         //1.set original status pattern for cell[][]
         for(int i=0; i<15; i++) {
             for(int j=0; j<15; j++) {
@@ -152,6 +176,38 @@ public class MainPanelTest {
         
     
     }
+    
+       /**
+     * Test of backup method, of class MainPanel.
+     * Test the modification to backup() won't change its function
+     * Test cells that all alive after running for one iteration, the backup will return panel to the status in last iteration
+     */
+    @Test
+    public void TestBackup2(){
+        //1.set all cells alive
+        for(int i=0; i<15; i++) {
+            for(int j=0; j<15; j++) {
+                _cells[i][j] = new Cell();
+                _cells[i][j].setAlive(true);
+            }
+	}
+        
+        //2.run and backup
+        panel.run();
+        
+        //3.convert to backup
+        panel.undo();
+        
+        //4.verify the current status pattern is the same as the one in last iteration
+        for(int i=0; i<15; i++) {
+            for(int j=0; j<15; j++) {
+                    assertTrue(_cells[i][j].getAlive());
+            }
+	}
+        
+    }
+    
+    
     
     /**
      * Test of debugPrint method, of class MainPanel.
