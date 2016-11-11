@@ -31,6 +31,8 @@ https://github.com/carolcheng124/SlowLifeGUI/blob/master/screenshots/snapshot2_f
 PRECONDITION:
 
 run this application, set panel size as 15, all cells shows grey in panel.
+
+
 EXECUTION STEPS:
 
 1. click on all cells in row 7 to trigger them alive, showing "X" with red backgroundcolor
